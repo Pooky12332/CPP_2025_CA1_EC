@@ -60,7 +60,7 @@ Position,Artist,Album Name,Label,Year
 59,Stevie Wonder,'Talking Book',Tamla/Motown,1972
 60,Van Morrison,'Astral Weeks',Warner Bros.,1968
 61,Eric B. & Rakim,'Paid In Full',4th & B’way,1987
-62,Guns N’ Roses,'Appetite for Destruction',Geffen,1987
+62,Guns N Roses,'Appetite for Destruction',Geffen,1987
 63,Steely Dan,'Aja',ABC,1977
 64,OutKast,'Stankonia',LaFace,2000
 65,James Brown,'Live at the Apollo',King,1963
@@ -497,5 +497,5 @@ Position,Artist,Album Name,Label,Year
 496,Shakira,'Dónde Están los Ladrones',Columbia,1998
 497,Various Artists,'The Indestructible Beat of Soweto',Earthworks,1985
 498,Suicide,'Suicide',Red Star,1977
-499,Rufus, Chaka Khan 'Ask Rufus',ABC,1977
-500,Arcade Fire,'﻿Funeral',Merge,2004
+499,Rufus & Chaka Khan,'Ask Rufus',ABC,1977
+500,Arcade Fire,'Funeral',Merge,2004

@@ -20,12 +20,23 @@ vector<string> tableHeaders;
 
 vector<Album> fileRead();
 vector<string> dataSplit(string dataLine);
-void dataDisplayTable(vector<Album> albums);
+void displayTable(vector<Album> albums);
+void displayTable(Album album);
+int dataSearchForAlbum(vector<Album> albums, string queryArtist);
+vector<Album> dataSearchForArtist(vector<Album> ablums, string queryArtist);
+vector<Album> dataSearchForLabel(vector<Album> albums, string queryLabel);
+void userInputArtist(vector<Album> albums);
 
 // Main function
 int main() {
 	vector<Album> albums = fileRead();
-	dataDisplayTable(albums);
+	displayTable(albums[dataSearchForAlbum(albums, "Nevermind")]);
+	cout << endl;
+	displayTable(dataSearchForArtist(albums, "Nirvana"));
+	cout << endl;
+	displayTable(dataSearchForLabel(albums, "Geffen"));
+	cout << endl;
+	userInputArtist(albums);
 	return 0;
 }
 
@@ -76,8 +87,45 @@ vector<string> dataSplit(string dataLine) {
 	return dataVec;
 }
 
-// Method that creates the table to be displayed to the user in the CLI
-void dataDisplayTable(vector<Album> albums) {
+int dataSearchForAlbum(vector<Album> albums, string queryName) {
+	int artistPos = -1;
+
+	for (int i = 0; i < albums.size(); i++) {
+		if (albums[i].name == "'" + queryName + "'") {
+			artistPos = i;
+			break;
+		}
+	}
+
+	return artistPos;
+}
+
+vector<Album> dataSearchForArtist(vector<Album> albums, string queryArtist) {
+	vector<Album> sortedAlbums;
+
+	for (Album& album : albums) {
+		if (album.artist == queryArtist) {
+			sortedAlbums.push_back(album);
+		}
+	}
+
+	return sortedAlbums;
+}
+
+vector<Album> dataSearchForLabel(vector<Album> albums, string queryLabel) {
+	vector<Album> sortedAlbums;
+
+	for (Album& album : albums) {
+		if (album.label == queryLabel) {
+			sortedAlbums.push_back(album);
+		}
+	}
+
+	return sortedAlbums;
+}
+
+// Method that creates the table based off a vector
+void displayTable(vector<Album> albums) {
 	cout << " | " << tableHeaders[0].substr(0, 3) << " | " << tableHeaders[1] << "                 | " << tableHeaders[2] << "                       | " << tableHeaders[3] << "           | " << tableHeaders[4] << " | " << endl;
 	cout << " ============================================================================================" << endl;
 
@@ -133,4 +181,69 @@ void dataDisplayTable(vector<Album> albums) {
   	outStr += to_string(albums[i].year) + " |";
   	cout << outStr << endl;
  	}
+}
+
+// Display a single album instead of many
+void displayTable(Album album) {
+	string outStr;
+  string paddedPosition = to_string(album.position);
+  string paddedArtist = album.artist;
+  string paddedName = album.name;
+  string paddedLabel = album.label;
+
+	outStr += " | " + tableHeaders[0].substr(0, 3) + " | " + tableHeaders[1] + "                 | " + tableHeaders[2] + "                       | " + tableHeaders[3] + "           | " + tableHeaders[4] + " | \n";
+	outStr += " ============================================================================================\n | ";
+
+	// Position formatting
+	if (album.position < 10) {
+		paddedPosition += "  ";
+	} else if (album.position < 100) {
+		paddedPosition += " ";
+	}
+
+	outStr += paddedPosition += " | ";
+
+	// Artist formatting
+	if (album.artist.length() >= 22) {
+		paddedArtist = album.artist.substr(0, 20) + "..";
+	} else {
+		while (paddedArtist.length() < 22) {
+			paddedArtist += " ";
+		}
+	}
+
+	outStr += paddedArtist + " | ";
+
+	// Album Name formatting
+	if (album.name.length() >= 32) {
+		paddedName = album.name.substr(0, 30) + "..";
+	} else {
+		while (paddedName.length() < 32) {
+			paddedName += " ";
+		}
+	}
+
+	outStr += paddedName + " | ";
+
+	// Label formatting
+	if (album.label.length() >= 15) {
+		paddedLabel = album.label.substr(0, 13) + "..";
+	} else {
+		while (paddedLabel.length() < 15) {
+			paddedLabel += " ";
+		}
+	}
+
+	outStr += paddedLabel + " | ";
+
+	outStr += to_string(album.year) + " |";
+	cout << outStr << endl;
+}
+
+void userInputArtist(vector<Album> albums) {
+	string input;
+	cout << "[?] Artist name: ";
+	cin >> input;
+
+	displayTable(dataSearchForArtist(albums, input));
 }
